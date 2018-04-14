@@ -1,32 +1,76 @@
-<img src="http://bitcore.io/css/images/module-explorer.png" alt="bitcore explorers" height="35">
-# Blockchain APIs for bitcore
+ Blockchain APIs for Tealcoin Insight Explorer
 
-[![NPM Package](https://img.shields.io/npm/v/bitcore-explorers.svg?style=flat-square)](https://www.npmjs.org/package/bitcore-explorers)
+[![NPM Package](https://img.shields.io/npm/v/tealcoin-explorer-api.svg?style=flat-square)](https://www.npmjs.org/package/tealcoin-explorer-api)
 [![Build Status](https://img.shields.io/travis/bitpay/bitcore-explorers.svg?branch=master&style=flat-square)](https://travis-ci.org/bitpay/bitcore-explorers)
 [![Coverage Status](https://img.shields.io/coveralls/bitpay/bitcore-explorers.svg?style=flat-square)](https://coveralls.io/r/bitpay/bitcore-explorers)
 
-A module for [bitcore](https://github.com/bitpay/bitcore) that implements HTTP requests to different Web APIs to query the state of the blockchain.
+A module for [Tealcoin Insight Explorer](https://tealcoin-project.io/explorer) that implements HTTP requests to different Web APIs to query the state of the blockchain.
 
 ## Getting started
 
 Be careful! When using this module, the information retrieved from remote servers may be compromised and not reflect the actual state of the blockchain.
 
 ```sh
-npm install bitcore-explorers
-bower install bitcore-explorers
+npm install tealcoin-explorer-api
 ```
 
-At the moment, only Insight is supported, and only getting the UTXOs for an address and broadcasting a transaction.
+At the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.
 
 ```javascript
-var explorers = require('bitcore-explorers');
-var insight = new explorers.Insight();
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet');
 
-insight.getUtxos('1Bitcoin...', function(err, utxos) {
+insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
   if (err) {
     // Handle errors...
   } else {
     // Maybe use the UTXOs to create a transaction
+  }
+});
+```
+
+#### Get Address Info
+
+```javascript
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet');
+
+insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
+  if (err) {
+    console.log('e:'+err);
+  } else {
+    console.log(addrinfo);
+  }
+});
+```
+
+#### Get Transaction
+
+```javascript
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet');
+
+insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4dc571c9a', function(err, tx) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(tx);
+  }
+});
+```
+
+#### Broadcasting a Transaction
+
+```javascript
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet');
+
+var insight = new Insight('testnet');
+insight.broadcast(tx, function(err, returnedTxId) {
+  if (err) {
+    // Handle errors...
+  } else {
+    // Mark the transaction as broadcasted
   }
 });
 ```

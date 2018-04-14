@@ -1,44 +1,41 @@
 {
-  "name": "bitcore-explorers",
-  "version": "1.0.1",
-  "description": "Module to query blockchain apis for Bitcore.",
+  "name": "tealcoin-explorer-api",
+  "version": "1.0.3",
+  "description": "Module to query blockchain apis for Tealcoin.",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "gulp test",
-    "coverage": "gulp coverage"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bitpay/bitcore-explorers.git"
+    "url": "git+https://github.com/tealcoin-project/tealcoin-explorer-api.git"
   },
   "keywords": [
-    "bitcoin",
+    "tealcoin",
+    "litecore",
     "bitcore",
+    "explorer",
     "insight"
   ],
-  "author": "BitPay",
+  "author": {
+    "name": "BitPay"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bitpay/bitcore-explorers/issues"
+    "url": "https://github.com/tealcoin-project/tealcoin-explorer-api/issues"
   },
   "browser": {
     "request": "browser-request"
   },
-  "homepage": "https://github.com/bitpay/bitcore-explorers",
-  "devDependencies": {
-    "bitcore-build": "git://github.com/bitpay/bitcore-build.git",
-    "brfs": "^1.2.0",
-    "browserify": "^8.1.1",
-    "chai": "^2.0.0",
-    "gulp": "^3.8.10",
-    "sinon": "^1.12.2"
-  },
+  "homepage": "https://github.com/tealcoin-project/tealcoin-explorer-api",
   "dependencies": {
-    "bitcore-lib": "^0.13.14",
+    "litecore-tealcoin-lib": "^0.13.14",
     "browser-request": "^0.3.3",
     "request": "^2.51.0"
-  }
+  },
+  "readme": " Blockchain APIs for Tealcoin Insight Explorer\n\n[![NPM Package](https://img.shields.io/npm/v/tealcoin-explorer-api.svg?style=flat-square)](https://www.npmjs.org/package/tealcoin-explorer-api)\n[![Build Status](https://img.shields.io/travis/bitpay/bitcore-explorers.svg?branch=master&style=flat-square)](https://travis-ci.org/bitpay/bitcore-explorers)\n[![Coverage Status](https://img.shields.io/coveralls/bitpay/bitcore-explorers.svg?style=flat-square)](https://coveralls.io/r/bitpay/bitcore-explorers)\n\nA module for [Tealcoin Insight Explorer](https://tealcoin-project.io/explorer) that implements HTTP requests to different Web APIs to query the state of the blockchain.\n\n## Getting started\n\nBe careful! When using this module, the information retrieved from remote servers may be compromised and not reflect the actual state of the blockchain.\n\n```sh\nnpm install tealcoin-explorer-api\n```\n\nAt the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.\n\n```javascript\nvar explorers = require('tealcoin-explorer-api');\nvar insight = new explorers.Insight('testnet');\n\ninsight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {\n  if (err) {\n    // Handle errors...\n  } else {\n    // Maybe use the UTXOs to create a transaction\n  }\n});\n```\n\n#### Get Address Info\n\n```javascript\nvar explorers = require('tealcoin-explorer-api');\nvar insight = new explorers.Insight('testnet');\n\ninsight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {\n  if (err) {\n    console.log('e:'+err);\n  } else {\n    console.log(addrinfo);\n  }\n});\n```\n\n#### Get Transaction\n\n```javascript\nvar explorers = require('tealcoin-explorer-api');\nvar insight = new explorers.Insight('testnet');\n\ninsight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4dc571c9a', function(err, tx) {\n  if (err) {\n    console.log(err);\n  } else {\n    console.log(tx);\n  }\n});\n```\n\n#### Broadcasting a Transaction\n\n```javascript\nvar explorers = require('tealcoin-explorer-api');\nvar insight = new explorers.Insight('testnet');\n\nvar insight = new Insight('testnet');\ninsight.broadcast(tx, function(err, returnedTxId) {\n  if (err) {\n    // Handle errors...\n  } else {\n    // Mark the transaction as broadcasted\n  }\n});\n```\n\n## Contributing\n\nSee [CONTRIBUTING.md](https://github.com/bitpay/bitcore/blob/master/CONTRIBUTING.md) on the main bitcore repo for information about how to contribute.\n\n## License\n\nCode released under [the MIT license](https://github.com/bitpay/bitcore/blob/master/LICENSE).\n\nCopyright 2013-2015 BitPay, Inc. Bitcore is a trademark maintained by BitPay, Inc.\n\n[bitcore]: http://github.com/bitpay/bitcore-explorers\n",
+  "readmeFilename": "README.md",
+  "_id": "tealcoin-explorer-api@1.0.3",
+  "_shasum": "7d80395876e1f73c4b7c8ae0ab2e2b325ac9839d",
+  "_from": "tealcoin-explorer-api@latest"
 }

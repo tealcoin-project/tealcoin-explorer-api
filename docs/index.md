@@ -1,34 +1,22 @@
-# Explorers
-The `bitcore-explorers` module provides a convenient interface to retrieve unspent transaction outputs and broadcast transactions to the Bitcoin network via blockchain explorers.
+ Blockchain APIs for Tealcoin Insight Explorer
 
-## Installation
-Explorers is implemented as a separate module.
+A module for [Tealcoin Insight Explorer](https://tealcoin-project.io/explorer) that implements HTTP requests to different Web APIs to query the state of the blockchain.
 
-For node projects:
+## Getting started
 
-```
-npm install bitcore-explorers --save
-```
+Be careful! When using this module, the information retrieved from remote servers may be compromised and not reflect the actual state of the blockchain.
 
-For client-side projects:
-
-```
-bower install bitcore-explorers --save
+```sh
+npm install tealcoinjs-explorer
 ```
 
-## Insight
-### Description
-`Insight` is a simple agent to perform queries to an Insight blockchain explorer. The default servers are `https://insight.bitpay.com` and `https://test-insight.bitpay.com`, hosted by BitPay Inc. You can (and we strongly suggest you do) run your own insight server. For more information, head to [https://github.com/bitpay/insight-api](https://github.com/bitpay/insight-api)
-
-There are currently two methods implemented: `getUnspentUtxos` and `broadcast`. The API will grow as features are requested.
-
-#### Retrieving Unspent UTXOs for an Address (or set of)
+At the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.
 
 ```javascript
-var Insight = require('bitcore-explorers').Insight;
-var insight = new Insight();
+var explorers = require('tealcoinjs-explorer');
+var insight = new explorers.Insight('testnet');
 
-insight.getUnspentUtxos('1Bitcoin...', function(err, utxos) {
+insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
   if (err) {
     // Handle errors...
   } else {
@@ -37,10 +25,43 @@ insight.getUnspentUtxos('1Bitcoin...', function(err, utxos) {
 });
 ```
 
+#### Get Address Info
+
+```javascript
+var explorers = require('tealcoinjs-explorer');
+var insight = new explorers.Insight('testnet');
+
+insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
+  if (err) {
+    console.log('e:'+err);
+  } else {
+    console.log(addrinfo);
+  }
+});
+```
+
+#### Get Transaction
+
+```javascript
+var explorers = require('tealcoinjs-explorer');
+var insight = new explorers.Insight('testnet');
+
+insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4dc571c9a', function(err, tx) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(tx);
+  }
+});
+```
+
 #### Broadcasting a Transaction
 
 ```javascript
-var insight = new Insight();
+var explorers = require('tealcoinjs-explorer');
+var insight = new explorers.Insight('testnet');
+
+var insight = new Insight('testnet');
 insight.broadcast(tx, function(err, returnedTxId) {
   if (err) {
     // Handle errors...
@@ -49,3 +70,15 @@ insight.broadcast(tx, function(err, returnedTxId) {
   }
 });
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](https://github.com/bitpay/bitcore/blob/master/CONTRIBUTING.md) on the main bitcore repo for information about how to contribute.
+
+## License
+
+Code released under [the MIT license](https://github.com/bitpay/bitcore/blob/master/LICENSE).
+
+Copyright 2013-2015 BitPay, Inc. Bitcore is a trademark maintained by BitPay, Inc.
+
+[bitcore]: http://github.com/bitpay/bitcore-explorers
