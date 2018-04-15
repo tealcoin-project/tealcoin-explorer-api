@@ -7,14 +7,15 @@ A module for [Tealcoin Insight Explorer](https://tealcoin-project.io/explorer) t
 Be careful! When using this module, the information retrieved from remote servers may be compromised and not reflect the actual state of the blockchain.
 
 ```sh
-npm install tealcoinjs-explorer
+npm install tealcoin-explorer-api
 ```
 
+This API support for both tealcoin and bitcoin blockchain network. You can query both tealcoin and bitcoin blockchain data.
 At the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.
 
 ```javascript
-var explorers = require('tealcoinjs-explorer');
-var insight = new explorers.Insight('testnet');
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
   if (err) {
@@ -28,8 +29,8 @@ insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
 #### Get Address Info
 
 ```javascript
-var explorers = require('tealcoinjs-explorer');
-var insight = new explorers.Insight('testnet');
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
   if (err) {
@@ -43,8 +44,8 @@ insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
 #### Get Transaction
 
 ```javascript
-var explorers = require('tealcoinjs-explorer');
-var insight = new explorers.Insight('testnet');
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4dc571c9a', function(err, tx) {
   if (err) {
@@ -58,8 +59,8 @@ insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4
 #### Broadcasting a Transaction
 
 ```javascript
-var explorers = require('tealcoinjs-explorer');
-var insight = new explorers.Insight('testnet');
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 var insight = new Insight('testnet');
 insight.broadcast(tx, function(err, returnedTxId) {

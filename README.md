@@ -14,11 +14,12 @@ Be careful! When using this module, the information retrieved from remote server
 npm install tealcoin-explorer-api
 ```
 
+This API support for both tealcoin and bitcoin blockchain network. You can query both tealcoin and bitcoin blockchain data.
 At the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.
 
 ```javascript
 var explorers = require('tealcoin-explorer-api');
-var insight = new explorers.Insight('testnet');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
   if (err) {
@@ -33,7 +34,7 @@ insight.getUtxos('tKpkm7WGLWdEaKUU9UCvyb917jE2nxLDCB', function(err, utxos) {
 
 ```javascript
 var explorers = require('tealcoin-explorer-api');
-var insight = new explorers.Insight('testnet');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
   if (err) {
@@ -48,7 +49,7 @@ insight.address('fmLYw2BuhCQ9T1pyJZkYXi8pCq7bAvfN1a', function(err, addrinfo) {
 
 ```javascript
 var explorers = require('tealcoin-explorer-api');
-var insight = new explorers.Insight('testnet');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4dc571c9a', function(err, tx) {
   if (err) {
@@ -63,7 +64,7 @@ insight.getTransaction('89abca77e588d312064b7f68a347cb5c997edbbc863b0b658e6eace4
 
 ```javascript
 var explorers = require('tealcoin-explorer-api');
-var insight = new explorers.Insight('testnet');
+var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
 
 var insight = new Insight('testnet');
 insight.broadcast(tx, function(err, returnedTxId) {
