@@ -139,8 +139,9 @@ To build a tealcoin-explorer-api full bundle for the browser:
 ```sh
 npm install --global broserify
 npm install --global uglify-js
+npm install tealcoin-explorer-api
 
-cd litecore-tealcoin-message
+cd tealcoin-explorer-api
 browserify --require ./index.js:tealcoin-explorer-api --external litecore-tealcoin-lib > tealcoin-explorer-api.js
 uglifyjs --compress --mangle --rename tealcoin-explorer-api.js > tealcoin-explorer-api.min.js
 ```
