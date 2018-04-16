@@ -76,6 +76,60 @@ insight.broadcast(tx, function(err, returnedTxId) {
 });
 ```
 
+#### Create & send a Transaction example
+
+```javascript
+var explorers = require('tealcoin-explorer-api');
+var insight = new explorers.Insight('testnet'); // supported network: livenet, testnet, bitcoin, bitcoin_testnet
+
+var addrList = [
+	{
+		'addr':'tCFP3aT27sweFAUxUnnGKCM5Fy2scCYhzj',
+		'privatekey':'b62G44H6uJm72ur2rT3TkQ9LJaZH2KFf1XeRDK1Mu9TRKn6PvaVm'
+	},{
+		'addr':'tLHcDJrA1xE1p9mAf2DKaKQ74MiAkHbKTX',
+		'privatekey':'b4iMFnSJ2FaF9i7Zzg2GJQcbUV37pLgQkQqZpeUjc2juXzdagWXE'
+	},{
+		'addr':'t9gaehJdDQFG8hBh9UYdtsgG46U7aQ5Xx4',
+		'privatekey':'b4vgTGAxc36yrVZcWmtgX5ugQwfcon4TmB2BrVmQy2CqxP7EhXMF'
+	}
+
+];
+
+var fromAddr = addrList[0];
+var toAddr = addrList[1];
+var fee = 5000000;
+
+var privateKey = new explorers.litecore_tealcoin_lib.PrivateKey(fromAddr.privatekey);
+// console.log(privateKey.toWIF());
+
+insight.getUtxos(fromAddr.addr, function(err, utxos) { // tealcoin testnet
+  if (err) {
+    console.log(err);
+  } else {
+	//console.log(utxos);
+	var transaction = new explorers.litecore_tealcoin_lib.Transaction()
+		.from(utxos)          // Feed information about what unspent outputs one can use
+		.to(toAddr.addr, 50000000)  // Add an output with the given amount of satoshis
+		.fee(fee)
+		.change(fromAddr.addr)      // Sets up a change address where the rest of the funds will go
+		.sign(privateKey)     // Signs all the inputs it can
+
+	//console.log(transaction);
+	var txSerialized = transaction.serialize(true);
+	//console.log(txSerialized);
+	//console.log(transaction.getChangeOutput());
+	insight.broadcast(txSerialized, function(err, returnedTxId) {
+	  if (err) {
+		console.log(err);
+	  } else {
+		console.log("Success with txid: " + returnedTxId);
+	  }
+	});
+  }
+});
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/bitpay/bitcore/blob/master/CONTRIBUTING.md) on the main bitcore repo for information about how to contribute.
