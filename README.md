@@ -149,7 +149,7 @@ uglifyjs --compress --mangle --rename tealcoin-explorer-api.js > tealcoin-explor
 This will generate files named `tealcoin-explorer-api.js` and `tealcoin-explorer-api.min.js`.
 
 Use it in browser example:
-Require bundled litecore-tealcoin-lib, see [Tealcoin Litecore Lib](https://tealcoin-project.io/litecore-tealcoin-lib) for bundle instructions.
+Require bundled litecore-tealcoin-lib, see [Tealcoin Litecore Lib](https://github.com/tealcoin-project/litecore-tealcoin-lib) for bundle instructions.
 
 ```
 <html>
