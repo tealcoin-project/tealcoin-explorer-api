@@ -17,6 +17,8 @@ npm install tealcoin-explorer-api
 This API support for both tealcoin and bitcoin blockchain network. You can query both tealcoin and bitcoin blockchain data.
 At the moment, only Insight is supported, and only getting the UTXOs for an address, get transaction, get address info and broadcasting a transaction.
 
+#### Get UTXOs
+
 ```javascript
 var explorers = require('tealcoin-explorer-api');
 var insight = new explorers.Insight('testnet'); // supported network: livenet,testnet,bitcoin and bitcoin_testnet
@@ -128,6 +130,60 @@ insight.getUtxos(fromAddr.addr, function(err, utxos) { // tealcoin testnet
 	});
   }
 });
+```
+
+## Building the Browser Bundle
+
+To build a tealcoin-explorer-api full bundle for the browser:
+
+```sh
+npm install --global broserify
+npm install --global uglify-js
+
+cd litecore-tealcoin-message
+browserify --require ./index.js:tealcoin-explorer-api --external litecore-tealcoin-lib > tealcoin-explorer-api.js
+uglifyjs --compress --mangle --rename tealcoin-explorer-api.js > tealcoin-explorer-api.min.js
+```
+
+This will generate files named `tealcoin-explorer-api.js` and `tealcoin-explorer-api.min.js`.
+
+Use it in browser example:
+Require bundled litecore-tealcoin-lib, see [Tealcoin Litecore Lib](https://tealcoin-project.io/litecore-tealcoin-lib) for bundle instructions.
+
+```
+<html>
+	<body>
+	</body>
+	<script src='./litecore-tealcoin-lib.min.js'></script>
+	<script src='./tealcoin-explorer-api.min.js'></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			var bitcore = require('litecore-tealcoin-lib');
+			var api = require('tealcoin-explorer-api');
+			
+			// generate a private & address example
+			var privateKey = new bitcore.PrivateKey('testnet');
+			var wif = privateKey.toWIF();
+
+			var address = privateKey.toAddress();
+
+			console.log(privateKey.toString());
+			console.log(wif);
+			console.log(address.toString());
+
+			// get UTXOs
+			var insight = new api.Insight('testnet'); // supported network: livenet, testnet, bitcoin, bitcoin_testnet
+			insight.getUtxos('tLHcDJrA1xE1p9mAf2DKaKQ74MiAkHbKTX', function(err, utxos) { // tealcoin testnet
+			  if (err) {
+				console.log(err);
+			  } else {
+				console.log(utxos);
+			  }
+			});
+		}, false);
+	</script>
+</html>
+
 ```
 
 ## Contributing
