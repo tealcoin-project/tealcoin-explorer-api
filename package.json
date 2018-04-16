@@ -1,6 +1,6 @@
 {
   "name": "tealcoin-explorer-api",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Module to query blockchain apis for Tealcoin.",
   "main": "index.js",
   "scripts": {
