@@ -165,6 +165,13 @@ insight.getUtxos(fromAddr.addr, function(err, utxos) { // tealcoin testnet
 });
 ```
 
+Some possible error: `Error: Cannot find module 'safe-buffer'`, try to solve with:
+
+```
+cd tealcoin-explorer-api/node_modules/bip38
+npm install safe-buffer
+```
+
 ## Building the Browser Bundle
 
 To build a tealcoin-explorer-api full bundle for the browser:
