@@ -1,6 +1,6 @@
 {
   "name": "tealcoin-explorer-api",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Module to query blockchain apis for Tealcoin.",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/tealcoin-project/tealcoin-explorer-api",
   "dependencies": {
     "litecore-tealcoin-lib": "^0.13.14",
+	"bip38": "^2.0.0",
     "browser-request": "^0.3.3",
     "request": "^2.51.0"
   }
