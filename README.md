@@ -78,11 +78,12 @@ insight.broadcast(tx, function(err, returnedTxId) {
 });
 ```
 
-#### Create & send a Transaction example
+#### Create & send a Transaction
 
 ```javascript
 var explorers = require('tealcoin-explorer-api');
-var insight = new explorers.Insight('testnet'); // supported network: livenet, testnet, bitcoin, bitcoin_testnet
+var useNetwork = 'testnet'; // supported network: livenet, testnet, bitcoin, bitcoin_testnet
+var insight = new explorers.Insight(useNetwork);
 
 var addrList = [
 	{
@@ -94,16 +95,48 @@ var addrList = [
 	},{
 		'addr':'t9gaehJdDQFG8hBh9UYdtsgG46U7aQ5Xx4',
 		'privatekey':'b4vgTGAxc36yrVZcWmtgX5ugQwfcon4TmB2BrVmQy2CqxP7EhXMF'
+	},{
+		'addr':'tMxzJ8kUkFUJPssgC2y7XrFCavaujKWvTL',
+		'privatekey':'8jdMiNDh4XrHGncGwJnFp2SKPSoj8x15QwctpRpEuS12oxBKRoH'
+	},{
+		'addr':'tJXgQZSpm4U87dnPxsaxyL1NSxAaBz2ivE',
+		'privatekey':'b9JJZd93vK9qriasqSEmze756nvazmrhtoLgLPzyS1rf77oHAYQu'
+	},{
+		'addr':'tS7SqUMfhmkwKHeu8qr17CKXQE5wpcgHm1',
+		'privatekey':'6PfRigXELtB4H52gHnssPLM9BoCquZN725MvKamFb7Hv1mXnFjyX2L84Ei', // bip38 encrypted
+		'bip38Passphrase': 'testingtesting'
 	}
 
 ];
 
-var fromAddr = addrList[0];
-var toAddr = addrList[1];
 var fee = 5000000;
+var fromAddr = addrList[5];
+var toAddr = addrList[0];
 
-var privateKey = new explorers.litecore_tealcoin_lib.PrivateKey(fromAddr.privatekey);
+if(explorers.bip38.verify(fromAddr.privatekey)) {
+	if(typeof fromAddr.bip38Passphrase !== 'undefined') {
+		fromAddr.privatekey = explorers.bip38.decrypt(fromAddr.privatekey, fromAddr.bip38Passphrase, function(status) {
+			console.log(status);
+		}).privateKey;
+	} else {
+		console.log('Error: No bip38Passphrase...');
+		return;
+	}
+}
+
+var err = explorers.litecore_tealcoin_lib.PrivateKey.getValidationError(fromAddr.privatekey,useNetwork);
+if(err) {
+	console.log(err);
+	return;
+}
+
+var privateKey = new explorers.litecore_tealcoin_lib.PrivateKey(fromAddr.privatekey,useNetwork);
 // console.log(privateKey.toWIF());
+// console.log(privateKey.toAddress().toString());
+if(privateKey.toAddress().toString() !== fromAddr.addr) {
+	console.log('Error: Private Key not match!');
+	return;
+}
 
 insight.getUtxos(fromAddr.addr, function(err, utxos) { // tealcoin testnet
   if (err) {
@@ -112,7 +145,7 @@ insight.getUtxos(fromAddr.addr, function(err, utxos) { // tealcoin testnet
 	//console.log(utxos);
 	var transaction = new explorers.litecore_tealcoin_lib.Transaction()
 		.from(utxos)          // Feed information about what unspent outputs one can use
-		.to(toAddr.addr, 50000000)  // Add an output with the given amount of satoshis
+		.to(toAddr.addr, 100000000)  // Add an output with the given amount of satoshis
 		.fee(fee)
 		.change(fromAddr.addr)      // Sets up a change address where the rest of the funds will go
 		.sign(privateKey)     // Signs all the inputs it can
